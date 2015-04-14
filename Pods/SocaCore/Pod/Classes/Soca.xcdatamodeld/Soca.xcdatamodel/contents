@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D131" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AdapterConfig" representedClassName="AdapterConfig" isAbstract="YES" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="rules" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="RuleConfig" inverseName="adapter" inverseEntity="RuleConfig" syncable="YES"/>
+    </entity>
+    <entity name="AllRuleConfig" representedClassName="AllRuleConfig" parentEntity="RuleConfig" syncable="YES"/>
+    <entity name="AuthenticationServerAdapterConfig" representedClassName="AuthenticationServerAdapterConfig" isAbstract="YES" parentEntity="ServerAdapterConfig" syncable="YES">
+        <attribute name="authentication" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CountryRuleConfig" representedClassName="CountryRuleConfig" parentEntity="RuleConfig" syncable="YES">
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="match" attributeType="Boolean" syncable="YES"/>
+    </entity>
+    <entity name="DirectAdapterConfig" representedClassName="DirectAdapterConfig" parentEntity="AdapterConfig" syncable="YES"/>
+    <entity name="DirectRuleConfig" representedClassName="DirectRuleConfig" parentEntity="RuleConfig" syncable="YES"/>
+    <entity name="HTTPAdapterConfig" representedClassName="HTTPAdapterConfig" parentEntity="AuthenticationServerAdapterConfig" syncable="YES"/>
+    <entity name="HTTPProxyConfig" representedClassName="HTTPProxyConfig" parentEntity="ProxyConfig" syncable="YES"/>
+    <entity name="ProfileConfig" representedClassName="ProfileConfig" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="proxies" toMany="YES" deletionRule="Cascade" destinationEntity="ProxyConfig" inverseName="profile" inverseEntity="ProxyConfig" syncable="YES"/>
+    </entity>
+    <entity name="ProxyConfig" representedClassName="ProxyConfig" isAbstract="YES" syncable="YES">
+        <attribute name="name" attributeType="String" defaultValueString="Proxy" syncable="YES"/>
+        <attribute name="port" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="profile" maxCount="1" deletionRule="Nullify" destinationEntity="ProfileConfig" inverseName="proxies" inverseEntity="ProfileConfig" syncable="YES"/>
+        <relationship name="rules" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RuleConfig" inverseName="proxy" inverseEntity="RuleConfig" syncable="YES"/>
+    </entity>
+    <entity name="RuleConfig" representedClassName="RuleConfig" isAbstract="YES" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="adapter" maxCount="1" deletionRule="Nullify" destinationEntity="AdapterConfig" inverseName="rules" inverseEntity="AdapterConfig" syncable="YES"/>
+        <relationship name="proxy" maxCount="1" deletionRule="Nullify" destinationEntity="ProxyConfig" inverseName="rules" inverseEntity="ProxyConfig" syncable="YES"/>
+    </entity>
+    <entity name="ServerAdapterConfig" representedClassName="ServerAdapterConfig" isAbstract="YES" parentEntity="AdapterConfig" syncable="YES">
+        <attribute name="port" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="server" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ShadowsocksAdapterConfig" representedClassName="ShadowsocksAdapterConfig" parentEntity="ServerAdapterConfig" syncable="YES">
+        <attribute name="method" attributeType="String" syncable="YES"/>
+        <attribute name="password" attributeType="String" syncable="YES"/>
+        <attribute name="passwordKey" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="SHTTPAdapterConfig" representedClassName="SHTTPAdapterConfig" parentEntity="HTTPAdapterConfig" syncable="YES"/>
+    <entity name="SOCKS5AdapterConfig" representedClassName="SOCKS5AdapterConfig" parentEntity="ServerAdapterConfig" syncable="YES"/>
+    <entity name="SOCKS5ProxyConfig" representedClassName="SOCKS5ProxyConfig" parentEntity="ProxyConfig" syncable="YES"/>
+    <elements>
+        <element name="AdapterConfig" positionX="-686" positionY="138" width="128" height="73"/>
+        <element name="AllRuleConfig" positionX="-585" positionY="545" width="128" height="45"/>
+        <element name="AuthenticationServerAdapterConfig" positionX="43" positionY="119" width="128" height="88"/>
+        <element name="CountryRuleConfig" positionX="-279" positionY="378" width="128" height="73"/>
+        <element name="DirectAdapterConfig" positionX="-477" positionY="270" width="128" height="45"/>
+        <element name="DirectRuleConfig" positionX="-468" positionY="279" width="128" height="45"/>
+        <element name="HTTPAdapterConfig" positionX="61" positionY="288" width="128" height="45"/>
+        <element name="HTTPProxyConfig" positionX="-459" positionY="288" width="128" height="45"/>
+        <element name="ProfileConfig" positionX="-477" positionY="270" width="128" height="73"/>
+        <element name="ProxyConfig" positionX="-461" positionY="336" width="128" height="103"/>
+        <element name="RuleConfig" positionX="-360" positionY="545" width="128" height="90"/>
+        <element name="ServerAdapterConfig" positionX="-414" positionY="135" width="128" height="73"/>
+        <element name="ShadowsocksAdapterConfig" positionX="-477" positionY="270" width="128" height="90"/>
+        <element name="SHTTPAdapterConfig" positionX="52" positionY="414" width="128" height="45"/>
+        <element name="SOCKS5AdapterConfig" positionX="-315" positionY="270" width="128" height="45"/>
+        <element name="SOCKS5ProxyConfig" positionX="-450" positionY="297" width="128" height="45"/>
+    </elements>
+</model>

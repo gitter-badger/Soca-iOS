@@ -1,0 +1,18 @@
+{
+  "name": "SocaCrypto",
+  "version": "0.1.1",
+  "summary": "An Objective-C wrapper of CommonCrypto for Soca.",
+  "description": "                       You probably never need this, see the SocaCore and Soca for what your want.\n",
+  "homepage": "https://github.com/zhuhaow/SocaCrypto",
+  "license": "MIT",
+  "authors": {
+    "Zhuhao Wang": "zhuhaow@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/zhuhaow/SocaCrypto.git",
+    "tag": "0.1.1"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "public_header_files": "Pod/Classes/**/*.h"
+}

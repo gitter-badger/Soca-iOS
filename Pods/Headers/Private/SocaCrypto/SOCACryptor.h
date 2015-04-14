@@ -1,0 +1,1 @@
+../../../../../SocaCrypto/Pod/Classes/SOCACryptor.h

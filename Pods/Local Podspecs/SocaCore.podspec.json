@@ -1,0 +1,35 @@
+{
+  "name": "SocaCore",
+  "version": "0.1.0",
+  "summary": "The core of Soca.",
+  "description": "                       Everything backs up Soca.\n",
+  "homepage": "https://github.com/zhuhaow/SocaCore",
+  "license": "MIT",
+  "authors": {
+    "Zhuhao Wang": "zhuhaow@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/zhuhaow/SocaCore.git",
+    "tag": "0.1.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*.{h,m,swift}",
+  "resources": [
+    "Pod/Classes/*.xcdatamodeld"
+  ],
+  "frameworks": [
+    "Foundation",
+    "CoreData"
+  ],
+  "dependencies": {
+    "SocaCrypto": [
+      "~> 0.1.0"
+    ],
+    "CocoaLumberjack": [
+      "~> 2.0.0"
+    ],
+    "MagicalRecord": [
+
+    ]
+  }
+}

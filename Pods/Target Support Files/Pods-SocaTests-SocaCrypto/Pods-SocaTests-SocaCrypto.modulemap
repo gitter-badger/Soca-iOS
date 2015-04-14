@@ -1,0 +1,6 @@
+framework module SocaCrypto {
+  umbrella header "Pods-SocaTests-SocaCrypto-umbrella.h"
+
+  export *
+  module * { export * }
+}
