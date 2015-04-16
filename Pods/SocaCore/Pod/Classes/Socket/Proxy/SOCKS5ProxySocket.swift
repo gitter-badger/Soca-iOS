@@ -61,11 +61,11 @@ class SOCKS5ProxySocket : ProxySocket {
             var rawPort :UInt16 = 0
             data.getBytes(&rawPort, length: sizeof(UInt16))
             self.destinationPort = NSSwapBigShortToHost(rawPort)
-            DDLogInfo("Recieved request to \(self.destinationHost):\(self.destinationPort)")
+            Setup.getLogger().info("Recieved request to \(self.destinationHost):\(self.destinationPort)")
             self.connectRequest = ConnectMessage(host: self.destinationHost!, port: self.destinationPort!, method: .SOCKS5)
             self.connect()
         default:
-            DDLogError("SOCKS5ProxySocket recieved some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketReadTag begins with SOCKS_, disconnect now")
+            Setup.getLogger().error("SOCKS5ProxySocket recieved some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketReadTag begins with SOCKS_, disconnect now")
             self.connectDidFail()
             break
         }

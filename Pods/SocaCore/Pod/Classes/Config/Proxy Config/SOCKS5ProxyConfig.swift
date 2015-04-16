@@ -10,9 +10,9 @@ import Foundation
 import CoreData
 
 @objc(SOCKS5ProxyConfig)
-class SOCKS5ProxyConfig: ProxyConfig {
+public class SOCKS5ProxyConfig: ProxyConfig {
 
-    override var type: String { return "SOCKS5 Server" }
+    override public var type: String { return "SOCKS5 Server" }
     
     override func proxyServer() -> ProxyServer {
         return SOCKS5ProxyServer(listenPort: UInt16(port), ruleManager: ruleManager())

@@ -1,6 +1,0 @@
-framework module CocoaLumberjack {
-  umbrella header "Pods-SocaTests-CocoaLumberjack-umbrella.h"
-
-  export *
-  module * { export * }
-}

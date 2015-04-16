@@ -8,7 +8,6 @@
 
 import UIKit
 import SocaCore
-import MagicalRecord
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        Setup.SetupCoreData()
-        Setup.SetupLogger()
+        Setup.setupCoreData()
         
         backgroundKeeper = BackgroundKeeper(application: application)
         backgroundKeeper.keepRunning()
@@ -47,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        MagicalRecord.cleanUp()
+        Setup.cleanUpCoreData()
     }
 
 

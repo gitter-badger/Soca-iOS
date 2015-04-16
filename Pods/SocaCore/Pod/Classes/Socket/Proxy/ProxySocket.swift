@@ -107,14 +107,14 @@ class ProxySocket : SocketDelegate {
             if let _tag = Tunnel.TunnelReadTag(rawValue: tag) {
                 self.tunnel?.didReadData(data, withTag: _tag)
             } else {
-                DDLogError("ProxySocket read some data with unknown data tag \(tag), should be some one in Tunnel.TunnelReadTag, disconnect now")
+                Setup.getLogger().error("ProxySocket read some data with unknown data tag \(tag), should be some one in Tunnel.TunnelReadTag, disconnect now")
                 self.connectDidFail()
             }
         } else {
             if let _tag = ProxySocketReadTag(rawValue: tag) {
                 self.didReadData(data, withTag: _tag)
             } else {
-                DDLogError("ProxySocket recieved some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketReadTag, disconnect now")
+                Setup.getLogger().error("ProxySocket recieved some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketReadTag, disconnect now")
                 self.connectDidFail()
             }
         }
@@ -125,14 +125,14 @@ class ProxySocket : SocketDelegate {
             if let _tag = Tunnel.TunnelWriteTag(rawValue: tag) {
                 self.tunnel?.didWriteData(data, withTag: _tag)
             } else {
-                DDLogError("ProxySocket write some data with unknown data tag \(tag), should be some one in Tunnel.TunnelWriteTag, disconnect now")
+                Setup.getLogger().error("ProxySocket write some data with unknown data tag \(tag), should be some one in Tunnel.TunnelWriteTag, disconnect now")
                 self.connectDidFail()
             }
         } else  {
             if let _tag = ProxySocketWriteTag(rawValue: tag) {
                 self.didWriteData(data, withTag: _tag)
             } else {
-                DDLogError("ProxySocket sent some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketWriteTag, disconnect now")
+                Setup.getLogger().error("ProxySocket sent some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketWriteTag, disconnect now")
                 self.connectDidFail()
             }
         }

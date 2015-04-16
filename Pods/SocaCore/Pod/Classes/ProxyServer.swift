@@ -32,7 +32,7 @@ class ProxyServer : NSObject {
         if let userInfo = error?.userInfo {
             DDLogError("Error listening on port \(self.listeningPort): \(userInfo)")
         }
-        DDLogInfo("Listening on port \(self.listeningPort)")
+        Setup.getLogger().info("Listening on port \(self.listeningPort)")
     }
     
     func socket(sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {}
@@ -48,7 +48,7 @@ class ProxyServer : NSObject {
         dispatch_async(self.listeningQueue) {
             let index = (self.activeSockets as NSArray).indexOfObject(socket)
             self.activeSockets.removeAtIndex(index)
-            DDLogVerbose("Removed a closed proxy socket, current sockets: \(self.activeSockets.count)")
+            Setup.getLogger().verbose("Removed a closed proxy socket, current sockets: \(self.activeSockets.count)")
         }
     }
     
@@ -59,7 +59,7 @@ class ProxyServer : NSObject {
 
 class SOCKS5ProxyServer : ProxyServer {
     override func socket(sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
-        DDLogVerbose("SOCKS5 proxy server accepted new socket")
+        Setup.getLogger().verbose("SOCKS5 proxy server accepted new socket")
         let proxySocket = SOCKS5ProxySocket(socket: newSocket, proxy:self)
         self.activeSockets.append(proxySocket)
     }
@@ -67,7 +67,7 @@ class SOCKS5ProxyServer : ProxyServer {
 
 class HTTPProxyServer : ProxyServer {
     override func socket(sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
-        DDLogVerbose("HTTP proxy server accepted new socket")
+        Setup.getLogger().verbose("HTTP proxy server accepted new socket")
         let proxySocket = HTTPProxySocket(socket: newSocket, proxy: self)
         self.activeSockets.append(proxySocket)
         proxySocket.openSocket()

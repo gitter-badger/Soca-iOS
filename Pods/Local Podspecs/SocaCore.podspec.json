@@ -1,6 +1,6 @@
 {
   "name": "SocaCore",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "summary": "The core of Soca.",
   "description": "                       Everything backs up Soca.\n",
   "homepage": "https://github.com/zhuhaow/SocaCore",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/zhuhaow/SocaCore.git",
-    "tag": "0.1.0"
+    "tag": "0.2.0"
   },
   "requires_arc": true,
   "source_files": "Pod/Classes/**/*.{h,m,swift}",
@@ -25,7 +25,7 @@
     "SocaCrypto": [
       "~> 0.1.0"
     ],
-    "CocoaLumberjack": [
+    "XCGLogger": [
       "~> 2.0.0"
     ],
     "MagicalRecord": [

@@ -12,7 +12,7 @@ import CoreData
 @objc(ServerAdapterConfig)
 public class ServerAdapterConfig: AdapterConfig {
 
-    @NSManaged var server: String!
-    @NSManaged var port: Int
+    @NSManaged public var server: String!
+    @NSManaged public var port: Int
 
 }

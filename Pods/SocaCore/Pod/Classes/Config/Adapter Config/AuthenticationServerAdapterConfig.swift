@@ -12,8 +12,8 @@ import CoreData
 @objc(AuthenticationServerAdapterConfig)
 public class AuthenticationServerAdapterConfig: ServerAdapterConfig {
 
-    @NSManaged var authentication: Bool
-    @NSManaged var username: String!
-    @NSManaged var password: String!
+    @NSManaged public var authentication: Bool
+    @NSManaged public var username: String!
+    @NSManaged public var password: String!
 
 }

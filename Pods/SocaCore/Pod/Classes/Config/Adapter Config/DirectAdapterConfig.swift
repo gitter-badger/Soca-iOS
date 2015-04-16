@@ -11,6 +11,6 @@ import CoreData
 
 @objc(DirectAdapterConfig)
 public class DirectAdapterConfig: AdapterConfig {
-    override var type: String { return "Direct" }
+    override public var type: String { return "Direct" }
 
 }

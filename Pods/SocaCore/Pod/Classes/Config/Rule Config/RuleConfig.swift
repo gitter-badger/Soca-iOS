@@ -10,13 +10,13 @@ import Foundation
 import CoreData
 
 @objc(RuleConfig)
-class RuleConfig: NSManagedObject {
+public class RuleConfig: NSManagedObject {
 
-    @NSManaged var name: String
-    @NSManaged var adapter: AdapterConfig
-    @NSManaged var proxy: ProxyConfig
+    @NSManaged public var name: String
+    @NSManaged public var adapter: AdapterConfig
+    @NSManaged public var proxy: ProxyConfig
     
-    var type: String { return "" }
+    public var type: String { return "" }
     
     func rule() -> Rule {
         return Rule()

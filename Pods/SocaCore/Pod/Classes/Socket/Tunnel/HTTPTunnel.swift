@@ -47,7 +47,7 @@ class HTTPTunnel : Tunnel {
                 _request.addHeader(key, value: value)
             }
         }
-        DDLogVerbose("Send modified HTTP request header: \n\(_request.toString())")
+        Setup.getLogger().verbose("Send modified HTTP request header: \n\(_request.toString())")
         self.sendData(_request.toData(), withTag: .HTTP_REQUEST_HEADER)
         if let _length = _request["Content-Length"]?.toInt() {
             self.sendBodyInChunkWithLength(_length)

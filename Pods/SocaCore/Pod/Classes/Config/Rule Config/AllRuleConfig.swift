@@ -10,9 +10,9 @@ import Foundation
 import CoreData
 
 @objc(AllRuleConfig)
-class AllRuleConfig: RuleConfig {
+public class AllRuleConfig: RuleConfig {
 
-    override var type: String { return "All Match" }
+    override public var type: String { return "All Match" }
     
     override func rule() -> Rule {
         return AllRule(adapterFactory: adapter.adapterFactory())

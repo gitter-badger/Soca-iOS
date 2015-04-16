@@ -8,8 +8,8 @@
 
 import Foundation
 
-class Profile {
-    var config: ProfileConfig!
+public class Profile {
+    public var config: ProfileConfig!
     var running = false
     lazy var servers: [ProxyServer] = {
         [unowned self] in
@@ -22,14 +22,14 @@ class Profile {
         self.config = profileConfig
     }
     
-    func start() {
+    public func start() {
         for server in servers {
             server.startProxy()
         }
         running = true
     }
     
-    func stop() {
+    public func stop() {
         for server in servers {
             server.disconnect()
         }

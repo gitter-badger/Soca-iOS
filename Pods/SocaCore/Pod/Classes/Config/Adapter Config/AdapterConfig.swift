@@ -14,7 +14,7 @@ public class AdapterConfig: NSManagedObject {
 
     @NSManaged public var name: String!
     @NSManaged public var rules: NSSet
-    var type: String { return "" }
+    public var type: String { return "" }
     
     func adapterFactory() -> AdapterFactory {
         return DirectAdapterFactory()

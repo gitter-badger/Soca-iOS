@@ -10,16 +10,16 @@ import Foundation
 import CoreData
 
 @objc(ProfileConfig)
-class ProfileConfig: NSManagedObject {
+public class ProfileConfig: NSManagedObject {
 
-    @NSManaged var name: String
-    @NSManaged var proxies: NSSet
+    @NSManaged public var name: String
+    @NSManaged public var proxies: NSSet
     
     func proxyArray() -> [ProxyConfig] {
         return proxies.allObjects as! [ProxyConfig]
     }
     
-    func profile() -> Profile {
+    public func profile() -> Profile {
         let profile = Profile(profileConfig: self)
         profile.config = self
         return profile

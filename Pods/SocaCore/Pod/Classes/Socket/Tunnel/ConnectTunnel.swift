@@ -22,7 +22,7 @@ class ConnectTunnel : Tunnel {
             sendData(data, withTag: .DATA)
             readData(tag: .DATA)
         default:
-            DDLogError("Tunnel read some data with unknown data tag \(tag), should be DATA, disconnect now")
+            Setup.getLogger().error("Tunnel read some data with unknown data tag \(tag), should be DATA, disconnect now")
             self.connectDidFail()
         }
     }
@@ -33,7 +33,7 @@ class ConnectTunnel : Tunnel {
             writeData(data, withTag: .DATA)
             receiveData(tag: .DATA)
         default:
-            DDLogError("Tunnel received some data with unknown data tag \(tag), should be DATA, disconnect now")
+            Setup.getLogger().error("Tunnel received some data with unknown data tag \(tag), should be DATA, disconnect now")
             self.connectDidFail()
         }
     }

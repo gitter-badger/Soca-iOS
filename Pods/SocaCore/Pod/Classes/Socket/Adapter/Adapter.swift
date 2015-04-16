@@ -103,7 +103,7 @@ class Adapter : SocketDelegate {
             if let _tag = Tunnel.TunnelReceiveTag(rawValue: tag) {
                 self.tunnel?.didReceiveData(readData, withTag: _tag)
             } else {
-                DDLogError("Adapter read some data with unknown data tag \(tag), should be some one in Tunnel.TunnelRecieveTag, disconnect now")
+                Setup.getLogger().error("Adapter read some data with unknown data tag \(tag), should be some one in Tunnel.TunnelRecieveTag, disconnect now")
                 self.connectDidFail()
             }
         } else {
@@ -116,7 +116,7 @@ class Adapter : SocketDelegate {
             if let _tag = Tunnel.TunnelSendTag(rawValue: tag) {
                 self.tunnel?.didSendData(data, withTag: _tag)
             } else {
-                DDLogError("ProxySocket write some data with unknown data tag \(tag), should be some one in Tunnel.TunnelSendTag, disconnect now")
+                Setup.getLogger().error("ProxySocket write some data with unknown data tag \(tag), should be some one in Tunnel.TunnelSendTag, disconnect now")
                 self.connectDidFail()
             }
         } else  {

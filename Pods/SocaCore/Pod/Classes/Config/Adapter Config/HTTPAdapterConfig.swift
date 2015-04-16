@@ -11,7 +11,7 @@ import CoreData
 
 @objc(HTTPAdapterConfig)
 public class HTTPAdapterConfig: AuthenticationServerAdapterConfig {
-    override var type: String { return "HTTP" }
+    override public var type: String { return "HTTP" }
 
     override func adapterFactory() -> AdapterFactory {
         return HTTPAdapterFactory(host: server, port: UInt16(port), auth: authObject())

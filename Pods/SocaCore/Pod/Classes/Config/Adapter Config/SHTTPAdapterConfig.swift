@@ -11,7 +11,7 @@ import CoreData
 
 @objc(SHTTPAdapterConfig)
 public class SHTTPAdapterConfig: HTTPAdapterConfig {
-    override var type: String { return "Secured HTTP" }
+    override public var type: String { return "Secured HTTP" }
     
     override func adapterFactory() -> AdapterFactory {
         return SecureHTTPAdapterFactory(host: server, port: UInt16(port), auth: authObject())

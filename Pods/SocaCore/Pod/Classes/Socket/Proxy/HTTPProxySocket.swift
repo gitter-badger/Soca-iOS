@@ -66,8 +66,8 @@ class HTTPProxySocket : ProxySocket {
                     _host = hostPort[0]
                     _port = 80
                 }
-                DDLogInfo("Recieved HTTP request to \(_host):\(_port)")
-                DDLogDebug("Revieved request header: \n\(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
+                Setup.getLogger().info("Recieved HTTP request to \(_host):\(_port)")
+                Setup.getLogger().debug("Revieved request header: \n\(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
                 var request = ConnectMessage(host: _host, port: _port, method: .HTTP_DIRECT)
                 request.httpProxyRawHeader = data
                 self.connectRequest = request

@@ -15,7 +15,7 @@ class DirectAdapter : Adapter {
         if self.connectRequest.IP != "" {
             self.socket.connectTo(self.connectRequest.IP, port: self.connectRequest.port)
         } else {
-            DDLogError("DNS look up failed for direct connect to \(self.connectRequest.destinationHost), disconnect now")
+            Setup.getLogger().error("DNS look up failed for direct connect to \(self.connectRequest.destinationHost), disconnect now")
             self.connectDidFail()
         }
         

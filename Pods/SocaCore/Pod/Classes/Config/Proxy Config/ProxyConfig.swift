@@ -10,16 +10,16 @@ import Foundation
 import CoreData
 
 @objc(ProxyConfig)
-class ProxyConfig: NSManagedObject {
+public class ProxyConfig: NSManagedObject {
 
-    @NSManaged var name: String?
-    @NSManaged var port: Int
-    @NSManaged var profile: ProfileConfig
-    @NSManaged var rules: NSOrderedSet
+    @NSManaged public var name: String?
+    @NSManaged public var port: Int
+    @NSManaged public var profile: ProfileConfig
+    @NSManaged public var rules: NSOrderedSet
 
-    var type: String { return "" }
+    public var type: String { return "" }
     
-    class func createWithDefaultRule(context: NSManagedObjectContext?) -> ProxyConfig {
+    class public func createWithDefaultRule(context: NSManagedObjectContext?) -> ProxyConfig {
         var proxyConfig: ProxyConfig!
         if let context = context {
             proxyConfig = MR_createInContext(context) as! ProxyConfig

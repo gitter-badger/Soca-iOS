@@ -10,9 +10,9 @@ import Foundation
 import CoreData
 
 @objc(HTTPProxyConfig)
-class HTTPProxyConfig: ProxyConfig {
+public class HTTPProxyConfig: ProxyConfig {
 
-    override var type: String { return "HTTP Server" }
+    override public var type: String { return "HTTP Server" }
     
     override func proxyServer() -> ProxyServer {
         return HTTPProxyServer(listenPort: UInt16(port), ruleManager: ruleManager())

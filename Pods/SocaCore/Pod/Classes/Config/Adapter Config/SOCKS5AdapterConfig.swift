@@ -11,7 +11,7 @@ import CoreData
 
 @objc(SOCKS5AdapterConfig)
 public class SOCKS5AdapterConfig: ServerAdapterConfig {
-    override var type: String { return "SOCKS5" }
+    override public var type: String { return "SOCKS5" }
     
     override func adapterFactory() -> AdapterFactory {
         return SOCKS5AdapterFactory(host: server, port: UInt16(port))

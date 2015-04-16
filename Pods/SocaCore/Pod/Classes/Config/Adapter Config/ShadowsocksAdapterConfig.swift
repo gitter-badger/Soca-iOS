@@ -11,11 +11,11 @@ import CoreData
 
 @objc(ShadowsocksAdapterConfig)
 public class ShadowsocksAdapterConfig: ServerAdapterConfig {
-    override var type: String { return "Shadowsocks" }
+    override public var type: String { return "Shadowsocks" }
 
-    @NSManaged var password: String
-    @NSManaged var passwordKey: NSData!
-    @NSManaged var method: String
+    @NSManaged public var password: String
+    @NSManaged public var passwordKey: NSData!
+    @NSManaged public var method: String
 
     
     override public func willSave() {
@@ -31,5 +31,11 @@ public class ShadowsocksAdapterConfig: ServerAdapterConfig {
     
     override func adapterFactory() -> AdapterFactory {
         return ShadowsocksAdapterFacotry(host: server, port: UInt16(port), key: passwordKey, method: encryptMethod(), password: password)
+    }
+    
+    public class func allEncryptMethod() -> [String] {
+        return ShadowsocksAdapter.EncryptMethod.allValues.map() {
+            return $0.rawValue
+        }
     }
 }
