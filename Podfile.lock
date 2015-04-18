@@ -2,7 +2,7 @@ PODS:
   - MagicalRecord (2.2):
     - MagicalRecord/Core (= 2.2)
   - MagicalRecord/Core (2.2)
-  - SocaCore (0.2.0):
+  - SocaCore (0.3.0):
     - MagicalRecord
     - SocaCrypto (~> 0.1.0)
     - XCGLogger (~> 2.0.0)
@@ -11,34 +11,28 @@ PODS:
   - XLForm (2.1.0)
 
 DEPENDENCIES:
-  - SocaCore (from `https://github.com/zhuhaow/SocaCore.git`)
-  - SocaCrypto (from `https://github.com/zhuhaow/SocaCrypto.git`)
+  - SocaCore (from `../SocaCore`)
+  - SocaCrypto (from `../SocaCrypto`)
   - XLForm (from `https://github.com/zhuhaow/XLForm.git`)
 
 EXTERNAL SOURCES:
   SocaCore:
-    :git: https://github.com/zhuhaow/SocaCore.git
+    :path: "../SocaCore"
   SocaCrypto:
-    :git: https://github.com/zhuhaow/SocaCrypto.git
+    :path: "../SocaCrypto"
   XLForm:
     :git: https://github.com/zhuhaow/XLForm.git
 
 CHECKOUT OPTIONS:
-  SocaCore:
-    :commit: 7b44dc5b35d8de93503c7c3bab055f12b778033d
-    :git: https://github.com/zhuhaow/SocaCore.git
-  SocaCrypto:
-    :commit: 02069a415c2616e8b39d9cd7adf8bfb40c6c75da
-    :git: https://github.com/zhuhaow/SocaCrypto.git
   XLForm:
     :commit: f70c02217cc995568f9d0f64782877f836d74d58
     :git: https://github.com/zhuhaow/XLForm.git
 
 SPEC CHECKSUMS:
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
-  SocaCore: f6f655b08f734cd0bd3e8dd1050e601b74c77061
+  SocaCore: 917b638921eba56df81ae849a366045abdb2b3fc
   SocaCrypto: dc092cae2ae0031133726325a9243f0028d63c36
   XCGLogger: 90570901ddf86d5479672d61a1b0a639235b851a
   XLForm: ba9e657a360a810ab1f64cc2cd6307fd99a86866
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.36.4

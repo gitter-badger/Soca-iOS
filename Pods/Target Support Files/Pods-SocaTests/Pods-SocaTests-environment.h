@@ -21,7 +21,7 @@
 // SocaCore
 #define COCOAPODS_POD_AVAILABLE_SocaCore
 #define COCOAPODS_VERSION_MAJOR_SocaCore 0
-#define COCOAPODS_VERSION_MINOR_SocaCore 2
+#define COCOAPODS_VERSION_MINOR_SocaCore 3
 #define COCOAPODS_VERSION_PATCH_SocaCore 0
 
 // SocaCrypto

@@ -32,10 +32,10 @@ class BackgroundKeeper {
             var remainingTime :NSTimeInterval = 0
             while true {
                 remainingTime = self.application.backgroundTimeRemaining
-                DDLogDebug("Remaining background running time is \(remainingTime)")
+                Setup.getLogger().debug("Remaining background running time is \(remainingTime)")
                 if remainingTime < 30 {
                     self.player.play()
-                    DDLogDebug("Played sound, the new remaining background running time is \(self.application.backgroundTimeRemaining)")
+                    Setup.getLogger().debug("Played sound, the new remaining background running time is \(self.application.backgroundTimeRemaining)")
                 }
                 NSThread.sleepForTimeInterval(7)
             }
