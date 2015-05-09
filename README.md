@@ -1,5 +1,5 @@
 # Soca-iOS
-![Version](https://img.shields.io/github/release/zhuhaow/Soca-iOS.svg) ![license](https://img.shields.io/github/license/zhuhaow/Soca-iOS.svg)
+![status](https://img.shields.io/badge/status-maintained-brightgreen.svg) ![version](https://img.shields.io/github/release/zhuhaow/Soca-iOS.svg) ![license](https://img.shields.io/github/license/zhuhaow/Soca-iOS.svg)
 
 A rule based proxy forwarder on iPhone and iPad. 
 
