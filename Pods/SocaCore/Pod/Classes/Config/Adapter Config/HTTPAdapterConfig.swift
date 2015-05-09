@@ -14,7 +14,7 @@ public class HTTPAdapterConfig: AuthenticationServerAdapterConfig {
     override public var type: String { return "HTTP" }
 
     override func adapterFactory() -> AdapterFactory {
-        return HTTPAdapterFactory(host: server, port: UInt16(port), auth: authObject())
+        return HTTPAdapterFactory(host: server, port: port, auth: authObject())
     }
     
     func authObject() -> Authentication? {

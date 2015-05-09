@@ -8,9 +8,13 @@
 
 import Foundation
 
+/**
+ *  Profile holds the set of proxies with specific rules you would like to run simutaneouly.
+*/
 public class Profile {
-    public var config: ProfileConfig!
-    var running = false
+    public let config: ProfileConfig
+    public var running = false
+    
     lazy var servers: [ProxyServer] = {
         [unowned self] in
         self.config.proxies.allObjects.map() {

@@ -29,13 +29,12 @@ class BackgroundKeeper {
         // begin background task
         backgroundTask = application.beginBackgroundTaskWithExpirationHandler(){}
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            [unowned self] in
             var remainingTime :NSTimeInterval = 0
             while true {
                 remainingTime = self.application.backgroundTimeRemaining
-                Setup.getLogger().debug("Remaining background running time is \(remainingTime)")
                 if remainingTime < 30 {
                     self.player.play()
-                    Setup.getLogger().debug("Played sound, the new remaining background running time is \(self.application.backgroundTimeRemaining)")
                 }
                 NSThread.sleepForTimeInterval(7)
             }

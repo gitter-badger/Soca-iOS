@@ -15,6 +15,6 @@ public class HTTPProxyConfig: ProxyConfig {
     override public var type: String { return "HTTP Server" }
     
     override func proxyServer() -> ProxyServer {
-        return HTTPProxyServer(listenPort: UInt16(port), ruleManager: ruleManager())
+        return HTTPProxyServer(listenOnPort: port, withRuleManager: ruleManager())
     }
 }

@@ -10,18 +10,18 @@ import Foundation
 
 class ServerAdapterFactory : AdapterFactory {
     let serverHost: String
-    let serverPort: UInt16
+    let serverPort: Int
     
-    init(host: String, port: UInt16) {
+    init(host: String, port: Int) {
         serverHost = host
         serverPort = port
     }
     
-    func canHandle(request: ConnectMessage) -> Bool {
+    func canHandle(request: ConnectRequest) -> Bool {
         return false
     }
     
-    func getAdapter(request: ConnectMessage, delegateQueue: dispatch_queue_t) -> Adapter {
+    func getAdapter(request: ConnectRequest, delegateQueue: dispatch_queue_t) -> Adapter {
         return DirectAdapter(request: request, delegateQueue: delegateQueue)
     }
 }

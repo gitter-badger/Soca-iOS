@@ -15,6 +15,6 @@ public class SOCKS5ProxyConfig: ProxyConfig {
     override public var type: String { return "SOCKS5 Server" }
     
     override func proxyServer() -> ProxyServer {
-        return SOCKS5ProxyServer(listenPort: UInt16(port), ruleManager: ruleManager())
+        return SOCKS5ProxyServer(listenOnPort: port, withRuleManager: ruleManager())
     }
 }

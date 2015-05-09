@@ -9,7 +9,9 @@
 import Foundation
 import SocaCrypto
 
-class ShadowsocksAdapter: SOCKS5Adapter {
+class ShadowsocksAdapter: ServerAdapter {
+    let ivTag = 10000
+    
     var readIV: NSData!
     let key: NSData
     let encryptMethod: EncryptMethod
@@ -36,70 +38,64 @@ class ShadowsocksAdapter: SOCKS5Adapter {
         static let allValues: [EncryptMethod] = [.AES128CFB, .AES192CFB, .AES256CFB]
     }
     
-    enum ShadowsocksTag: Int {
-        case IV = 25000
-    }
-    
-    init(request: ConnectMessage, delegateQueue: dispatch_queue_t, serverHost: String, serverPort: UInt16, key: NSData, encryptMethod: EncryptMethod, password: String) {
-//        self.key = key
+    init(request: ConnectRequest, delegateQueue: dispatch_queue_t, serverHost: String, serverPort: Int, key: NSData, encryptMethod: EncryptMethod) {
         self.encryptMethod = encryptMethod
-        (self.key, _) = ShadowsocksEncryptHelper.getKeyAndIV(password, methodType: encryptMethod)
+        self.key = key
         super.init(request: request, delegateQueue: delegateQueue, serverHost: serverHost, serverPort: serverPort)
     }
     
-    override func socketDidConnectToHost(host: String, onPort: UInt16) {
-        writeData(writeIV, withTag: 0)
-        processWrite = true
+    override func connectionEstablished() {
+        writeData(writeIV, withTag: ivTag)
         if connectRequest.isIPv4() {
             var response: [UInt8] = [0x01]
-            response += Utils.IP.IPv4ToBytes(self.connectRequest.destinationHost)!
+            response += Utils.IP.IPv4ToBytes(connectRequest.host)!
             let responseData = NSData(bytes: &response, length: response.count)
-            writeData(responseData, withTag: WriteTag.CONNECT.rawValue)
+            writeEncryptedData(responseData, withTag: SocketTag.SOCKS5.MethodResponse)
         } else if connectRequest.isIPv6() {
             var response: [UInt8] = [0x04]
-            response += Utils.IP.IPv6ToBytes(self.connectRequest.destinationHost)!
+            response += Utils.IP.IPv6ToBytes(connectRequest.host)!
             let responseData = NSData(bytes: &response, length: response.count)
-            writeData(responseData, withTag: WriteTag.CONNECT.rawValue)
+            writeEncryptedData(responseData, withTag: SocketTag.SOCKS5.MethodResponse)
         } else {
             var response: [UInt8] = [0x03]
-            response.append(UInt8(count(self.connectRequest.destinationHost)))
-            response += [UInt8](self.connectRequest.destinationHost.utf8)
+            response.append(UInt8(count(connectRequest.host)))
+            response += [UInt8](connectRequest.host.utf8)
             let responseData = NSData(bytes: &response, length: response.count)
-            writeData(responseData, withTag: WriteTag.CONNECT.rawValue)
+            writeEncryptedData(responseData, withTag: SocketTag.SOCKS5.MethodResponse)
         }
-        var portBytes = Utils.toByteArray(self.connectRequest.port).reverse()
+        var portBytes = Utils.toByteArray(UInt16(connectRequest.port)).reverse()
         let portData = NSData(bytes: &portBytes, length: portBytes.count)
-        writeData(portData, withTag: WriteTag.CONNECT.rawValue)
-        readDataToLength(ivLength, withTag: ShadowsocksTag.IV.rawValue)
-        ready()
-        forwardingRead = false
+        writeEncryptedData(portData, withTag: SocketTag.SOCKS5.MethodResponse)
+        readDataToLength(ivLength, withTag: ivTag)
     }
     
     override func didReadData(data: NSData, withTag tag: Int) {
-        if tag == ShadowsocksTag.IV.rawValue {
+        switch tag {
+        case ivTag:
             readIV = data
-            processRead = true
-            forwardingRead = true
-            readData(tag: Tunnel.TunnelReceiveTag.DATA.rawValue)
-        } else {
-            super.didReadData(data, withTag: tag)
+            sendResponse(response: nil)
+        case SocketTag.Forward:
+            sendData(decryptData(data))
+            readDataForForward()
+        default:
+            break
         }
     }
     
-    override func processReadData(data: NSData) -> NSData {
-        return decryptData(data)
-    }
-    
-    override func processWriteData(data: NSData) -> NSData {
-        return encryptData(data)
+    override func proxySocketReadyForward() {
+        readDataForForward()
     }
     
     func encryptData(data: NSData) -> NSData {
         return encryptor.update(data)
     }
-    
+
     func decryptData(data: NSData) -> NSData {
         return decryptor.update(data)
+    }
+    
+    func writeEncryptedData(data: NSData, withTag tag: Int) {
+        writeData(encryptData(data), withTag: tag)
     }
 }
 

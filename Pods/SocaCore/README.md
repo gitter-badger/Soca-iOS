@@ -2,9 +2,10 @@
 
 [![CI Status](http://img.shields.io/travis/zhuhaow/SocaCore.svg?style=flat)](https://travis-ci.org/zhuhaow/SocaCore)
 
-## Author
+Things backing up Soca.
 
-Zhuhao Wang
+## Usage
+See [Soca-iOS](https://github.com/zhuhaow/soca-ios).
 
 ## License
 

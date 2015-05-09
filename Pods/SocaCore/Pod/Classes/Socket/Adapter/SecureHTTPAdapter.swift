@@ -9,9 +9,8 @@
 import Foundation
 
 class SecureHTTPAdapter : HTTPAdapter {
-    override func socketDidConnectToHost(host: String, onPort port: UInt16) {
-        socket._socket.startTLS([kCFStreamSSLPeerName: self.serverHost])
-//        socket.startTLS([NSObject: AnyObject]())
-        super.socketDidConnectToHost(host, onPort: port)
+    override func connectionEstablished() {
+        socket.startTLS([kCFStreamSSLPeerName: serverHost])
+        super.connectionEstablished()
     }
 }

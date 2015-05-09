@@ -7,87 +7,115 @@
 //
 
 import Foundation
-import CocoaLumberjack
-//import CocoaLumberjackSwift
 
 class HTTPProxySocket : ProxySocket {
+    class HTTPStatus {
+        let CHUNK_SIZE = 1000
+        var dataLengthToSend = 0
+        
+        init(contentLength: Int) {
+            dataLengthToSend = contentLength
+        }
+        
+        func chuckLengthToRead() -> Int {
+            if dataLengthToSend >= 0 {
+                return min(CHUNK_SIZE, dataLengthToSend)
+            } else {
+                return CHUNK_SIZE
+            }
+        }
+        
+        func sentLength(length: Int) {
+            dataLengthToSend -= length
+        }
+        
+        func finished() -> Bool {
+            return (chuckLengthToRead() <= 0)
+        }
+    }
+    
     enum HTTPMethod : String {
         case GET = "GET", HEAD = "HEAD", POST = "POST", PUT = "PUT", DELETE = "DELETE", TRACE = "TRACE", OPTIONS = "OPTIONS", CONNECT = "CONNECT", PATCH = "PATCH"
     }
     
+    var status: HTTPStatus?
+    var onceToken: dispatch_once_t = 0
+    var forward = false
+    
     override func openSocket() {
-        self.readDataToData(Utils.HTTPData.DoubleCRLF, withTag: .HTTP_HEADER)
+        readDataToData(Utils.HTTPData.DoubleCRLF, withTag: SocketTag.HTTP.Header)
     }
     
-    override func connect() {
-        if self.tunnel == nil {
+    override func connectToRemote() {
+        if tunnel == nil {
             // if this is a new socket without an adapter
             let adapterFactory = proxy.matchRule(self.connectRequest)
-            switch self.connectRequest.method {
-            case .HTTP_CONNECT:
-                self.tunnel = ConnectTunnel(fromSocket: self, connectTo: self.connectRequest, withAdapterFactory: adapterFactory)
-            case .HTTP_DIRECT:
-                self.tunnel = HTTPTunnel(fromSocket: self, connectTo: self.connectRequest, withAdapterFactory: adapterFactory)
-            default:
-                break
-            }
-            self.tunnel?.connect()
+            tunnel = Tunnel(fromSocket: self, withRequest: connectRequest, andAdapterFactory: adapterFactory)
+            tunnel!.connectToRemote()
         } else {
-            self.tunnel?.updateRequest(self.connectRequest)
-            self.adapterBecameReady()
+            let response = tunnel!.updateRequest(connectRequest)
+            recievedResponse(response: response)
         }
     }
     
-    override func didReadData(data: NSData, withTag tag: ProxySocketReadTag) {
+    override func didReadData(data: NSData, withTag tag: Int) {
         switch tag {
-        case .HTTP_HEADER:
-            let message = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, 1).takeRetainedValue()
-            CFHTTPMessageAppendBytes(message, UnsafePointer<UInt8>(data.bytes), data.length)
-            let method: String = CFHTTPMessageCopyRequestMethod(message).takeRetainedValue() as String
-            switch HTTPMethod(rawValue: method.uppercaseString)! {
+        case SocketTag.HTTP.Header:
+            let httpRequest = HTTPRequest(headerData: data)
+            switch HTTPMethod(rawValue: httpRequest.method)! {
             case .CONNECT:
-                let _url = CFURLGetString(CFHTTPMessageCopyRequestURL(message).takeRetainedValue()) as String
-                let hostPort = _url.componentsSeparatedByString(":")
-                let _host = hostPort[0]
-                let _port = hostPort[1].toInt()!
-                DDLogInfo("Recieved HTTP CONNECT request to \(_host):\(_port)")
-                var request = ConnectMessage(host: _host, port: _port, method: .HTTP_CONNECT)
-                request.httpProxyRawHeader = data
-                self.connectRequest = request
-                self.connect()
+                var request = ConnectRequest(host: httpRequest.host, port: httpRequest.port, method: .HTTP_CONNECT)
+                request.httpRequest = httpRequest
+                connectRequest = request
+                readyToConnectToRemote()
             default:
-                let _url = CFHTTPMessageCopyHeaderFieldValue(message, "Host").takeRetainedValue() as String
-                let hostPort = _url.componentsSeparatedByString(":")
-                var _host: String, _port: Int
-                if hostPort.count > 1 {
-                    _host = hostPort[0]
-                    _port = hostPort[1].toInt()!
-                } else {
-                    _host = hostPort[0]
-                    _port = 80
-                }
-                Setup.getLogger().info("Recieved HTTP request to \(_host):\(_port)")
-                Setup.getLogger().debug("Revieved request header: \n\(NSString(data: data, encoding: NSUTF8StringEncoding)!)")
-                var request = ConnectMessage(host: _host, port: _port, method: .HTTP_DIRECT)
-                request.httpProxyRawHeader = data
-                self.connectRequest = request
-                self.connect()
+                var request = ConnectRequest(host: httpRequest.host, port: httpRequest.port, method: .HTTP_REQUEST)
+                request.httpRequest = httpRequest
+                connectRequest = request
+                status = HTTPStatus(contentLength: httpRequest.contentLength)
+                readyToConnectToRemote()
+            }
+        case SocketTag.HTTP.Content:
+            sendToRemote(data: data)
+            status!.sentLength(data.length)
+            if !status!.finished() {
+                readDataToLength(status!.chuckLengthToRead(), withTag: SocketTag.HTTP.Content)
+            } else {
+                // begin a new request
+                openSocket()
+            }
+        case SocketTag.Forward:
+            sendToRemote(data: data)
+            readDataForForward()
+        default:
+            break
+        }
+    }
+    
+    override func recievedResponse(response: ConnectResponse? = nil) {
+        switch connectRequest!.method {
+        case .HTTP_CONNECT:
+            writeData(Utils.HTTPData.ConnectSuccessResponse, withTag: SocketTag.HTTP.ConnectResponse)
+        case .HTTP_REQUEST:
+            if (!forward) {
+                readyForForward()
+                forward = true
+            }
+            connectRequest.httpRequest!.processForSend(rewriteToRelativePath: response?.rewritePath ?? true, removeProxyHeader: response?.removeHTTPProxyHeader ?? true, headerToAdd: response?.headerToAdd)
+            sendToRemote(data: connectRequest.httpRequest!.toData())
+            if !status!.finished() {
+                readDataToLength(status!.chuckLengthToRead(), withTag: SocketTag.HTTP.Content)
+            } else {
+                openSocket()
             }
         default:
             break
         }
     }
-    
-    override func adapterBecameReady(_ response: ConnectMessage? = nil) {
-        switch self.connectRequest!.method {
-        case .HTTP_CONNECT:
-            self.writeData(Utils.HTTPData.ConnectSuccessResponse, withTag: .HTTP_CONNECT_RESPONSE)
-            self.ready()
-        case .HTTP_DIRECT:
-            self.ready()
-            self.tunnel?.sendHTTPHeader(connectRequest.httpProxyRawHeader!)
-        default:
-            break
+    override func didWriteDataWithTag(tag: Int) {
+        if tag == SocketTag.HTTP.ConnectResponse {
+            readyForForward()
+            readDataForForward()
         }
     }
 }

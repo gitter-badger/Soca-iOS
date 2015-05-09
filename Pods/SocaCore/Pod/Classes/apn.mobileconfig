@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>PayloadContent</key>
+                <array>
+                    <dict>
+                        <key>DefaultsData</key>
+                        <dict>
+                            <key>apns</key>
+                            <array>
+                                <dict>
+                                    <key>apn</key>
+                                    <string>__ACCESSPOINTNAME__</string>
+                                    <key>proxy</key>
+                                    <string>127.0.0.1</string>
+                                    <key>proxyPort</key>
+                                    <integer>__PROXYPORT__</integer>
+                                </dict>
+                            </array>
+                        </dict>
+                        <key>DefaultsDomainName</key>
+                        <string>com.apple.managedCarrier</string>
+                    </dict>
+                </array>
+                <key>PayloadDescription</key>
+                <string>Customization of carrier Access Point Name for Soca.</string>
+                <key>PayloadDisplayName</key>
+                <string>Soca APN Configuration</string>
+                <key>PayloadIdentifier</key>
+                <string>com.zhuhao.Soca.APNConfiguration.</string>
+                <key>PayloadOrganization</key>
+                <string>Soca</string>
+                <key>PayloadType</key>
+                <string>com.apple.apn.managed</string>
+                <key>PayloadUUID</key>
+                <string>__UUID1__</string>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+            </dict>
+        </array>
+        <key>PayloadDescription</key>
+        <string>__CONFIGDESCRIPTION__</string>
+        <key>PayloadDisplayName</key>
+        <string>__CONFIGNAME__</string>
+        <key>PayloadIdentifier</key>
+        <string>com.zhuhao.soca.apnconfiguration.</string>
+        <key>PayloadOrganization</key>
+        <string></string>
+        <key>PayloadRemovalDisallowed</key>
+        <false/>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadUUID</key>
+        <string>__UUID2__</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+    </dict>
+</plist>

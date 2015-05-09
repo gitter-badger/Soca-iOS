@@ -96,16 +96,15 @@ struct Utils {
     }
     
     struct GeoIPLookup {
-        static var _geoIPLookup : GeoIP {
-            struct holder {
-                static let geoIP = GeoIP(database: NSBundle.mainBundle().pathForResource("GeoIP", ofType: "dat"))
-            }
-            return holder.geoIP
-        }
+        static let geoIPInstance: GeoIP = {
+            let bundle = NSBundle(forClass: GeoIP.self)
+            let databasePath = bundle.pathForResource("GeoIP", ofType: "dat")!
+            return GeoIP(database: databasePath)
+        }()
         
         static func Lookup(ip: String) -> String {
             if Utils.IP.isIPv4(ip) {
-                return _geoIPLookup.lookupCountryCodeForIp(ip)
+                return geoIPInstance.lookupCountryCodeForIp(ip)
             } else {
                 return "--"
             }

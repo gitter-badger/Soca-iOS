@@ -9,13 +9,13 @@
 import Foundation
 
 protocol RuleProtocol : class {
-    var name: String? { get }
+    var name: String? { get set }
     
     func match(request: ConnectMessage) -> AdapterFactory?
 }
 
 class Rule : RuleProtocol {
-    let name: String?
+    var name: String?
     
     init() {
         name = nil

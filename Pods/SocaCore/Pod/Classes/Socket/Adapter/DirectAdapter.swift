@@ -7,21 +7,33 @@
 //
 
 import Foundation
-import CocoaLumberjack
-//import CocoaLumberjackSwift
 
 class DirectAdapter : Adapter {
     override func connectToRemote() {
-        if self.connectRequest.IP != "" {
-            self.socket.connectTo(self.connectRequest.IP, port: self.connectRequest.port)
+        if connectRequest.IP != "" {
+            socket.connectToHost(connectRequest.IP, withPort: connectRequest.port)
         } else {
-            Setup.getLogger().error("DNS look up failed for direct connect to \(self.connectRequest.destinationHost), disconnect now")
-            self.connectDidFail()
+            Setup.getLogger().error("DNS look up failed for direct connect to \(self.connectRequest.host), disconnect now")
+            connectionDidFail()
         }
-        
     }
     
-    override func socketDidConnectToHost(host: String, onPort: UInt16) {
-        self.ready()
+    override func connectionEstablished() {
+        sendResponse(response: nil)
+    }
+
+    override func proxySocketReadyForward() {
+        readDataForForward()
+    }
+    
+    override func didReadData(data: NSData, withTag tag: Int) {
+        if tag == SocketTag.Forward {
+            sendData(data)
+            readDataForForward()
+        }
+    }
+    
+    override func didReceiveDataFromLocal(data: NSData) {
+        writeData(data, withTag: SocketTag.Forward)
     }
 }

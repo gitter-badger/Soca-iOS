@@ -11,28 +11,24 @@ import CoreData
 import SocaCore
 
 class ProfileListViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        [unowned self] in
-        ProfileConfig.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: nil, ascending: true, delegate: self)
-    }()
+    let manager = ProfileManager.getManager()
+    
+    override func viewDidLoad() {
+        manager.delegate = self
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return fetchedResultsController.sections!.count
+        return manager.sections.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return (fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo).numberOfObjects
+        return manager.sections[section].numberOfObjects
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -43,12 +39,12 @@ class ProfileListViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        let profileConfig = fetchedResultsController.objectAtIndexPath(indexPath) as! ProfileConfig
+        let profileConfig = manager[indexPath]
         
         cell.textLabel!.text = profileConfig.name
         cell.detailTextLabel!.text = "Proxy: \(profileConfig.proxies.count)"
         
-        if profileConfig == (UIApplication.sharedApplication().delegate as! AppDelegate).currentProfile?.config {
+        if indexPath == manager.currentRunningIndex {
             cell.accessoryType = .Checkmark
         } else {
             cell.accessoryType = .None
@@ -92,17 +88,7 @@ class ProfileListViewController: UITableViewController, NSFetchedResultsControll
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let profileConfig = fetchedResultsController.objectAtIndexPath(indexPath) as! ProfileConfig
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        if profileConfig == appDelegate.currentProfile?.config {
-            appDelegate.currentProfile?.stop()
-            appDelegate.currentProfile = nil
-        } else {
-            appDelegate.currentProfile?.stop()
-            appDelegate.currentProfile = profileConfig.profile()
-            appDelegate.currentProfile?.start()
-        }
-        tableView.reloadData()
+        manager.toggleProfileAtIndex(indexPath)
     }
 
     

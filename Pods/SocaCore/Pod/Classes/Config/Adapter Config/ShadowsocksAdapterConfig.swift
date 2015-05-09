@@ -30,7 +30,7 @@ public class ShadowsocksAdapterConfig: ServerAdapterConfig {
     }
     
     override func adapterFactory() -> AdapterFactory {
-        return ShadowsocksAdapterFacotry(host: server, port: UInt16(port), key: passwordKey, method: encryptMethod(), password: password)
+        return ShadowsocksAdapterFacotry(host: server, port: port, key: passwordKey, method: encryptMethod())
     }
     
     public class func allEncryptMethod() -> [String] {

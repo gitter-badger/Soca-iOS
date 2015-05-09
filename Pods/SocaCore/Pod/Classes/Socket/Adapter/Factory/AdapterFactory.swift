@@ -9,6 +9,6 @@
 import Foundation
 
 protocol AdapterFactory: class {
-    func canHandle(request: ConnectMessage) -> Bool
-    func getAdapter(request: ConnectMessage, delegateQueue: dispatch_queue_t) -> Adapter
+    func canHandle(request: ConnectRequest) -> Bool
+    func getAdapter(request: ConnectRequest, delegateQueue: dispatch_queue_t) -> Adapter
 }

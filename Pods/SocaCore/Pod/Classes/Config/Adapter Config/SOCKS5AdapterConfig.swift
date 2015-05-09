@@ -14,6 +14,6 @@ public class SOCKS5AdapterConfig: ServerAdapterConfig {
     override public var type: String { return "SOCKS5" }
     
     override func adapterFactory() -> AdapterFactory {
-        return SOCKS5AdapterFactory(host: server, port: UInt16(port))
+        return SOCKS5AdapterFactory(host: server, port: port)
     }
 }

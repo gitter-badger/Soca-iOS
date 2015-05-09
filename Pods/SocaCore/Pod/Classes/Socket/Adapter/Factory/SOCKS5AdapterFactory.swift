@@ -9,11 +9,11 @@
 import Foundation
 
 class SOCKS5AdapterFactory : ServerAdapterFactory {
-    override func canHandle(request: ConnectMessage) -> Bool {
+    override func canHandle(request: ConnectRequest) -> Bool {
         return true
     }
     
-    override func getAdapter(request: ConnectMessage, delegateQueue: dispatch_queue_t) -> Adapter {
+    override func getAdapter(request: ConnectRequest, delegateQueue: dispatch_queue_t) -> Adapter {
         return SOCKS5Adapter(request: request, delegateQueue: delegateQueue, serverHost: serverHost, serverPort: serverPort)
     }
 }

@@ -41,7 +41,7 @@
 		19854B0DE5A7E08C18CAA120 /* Pods-SocaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocaTests/Pods-SocaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		28F4E77A64C53A0B3A019C5F /* Pods-Soca.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soca.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soca/Pods-Soca.debug.xcconfig"; sourceTree = "<group>"; };
 		36A68F9E1AE2890D00A3CAEE /* APNViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APNViewController.swift; sourceTree = "<group>"; };
-		36FBE57E1ADD42DC00A64201 /* Soca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soca.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36FBE57E1ADD42DC00A64201 /* Soca-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Soca-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36FBE5881ADD42DC00A64201 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		36FBE58A1ADD42DC00A64201 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		36FBE58D1ADD42DC00A64201 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 		36FBE57F1ADD42DC00A64201 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				36FBE57E1ADD42DC00A64201 /* Soca.app */,
+				36FBE57E1ADD42DC00A64201 /* Soca-dev.app */,
 				36FBE5931ADD42DC00A64201 /* SocaTests.xctest */,
 			);
 			name = Products;
@@ -110,9 +110,9 @@
 		36FBE5801ADD42DC00A64201 /* Soca */ = {
 			isa = PBXGroup;
 			children = (
-				36FBE5A31ADD476500A64201 /* AppDelegate.swift */,
 				36FBE5B01ADD476500A64201 /* Util */,
 				36FBE5B91ADD476500A64201 /* View Controller */,
+				36FBE5A31ADD476500A64201 /* AppDelegate.swift */,
 				36FBE5871ADD42DC00A64201 /* Main.storyboard */,
 				36FBE58A1ADD42DC00A64201 /* Images.xcassets */,
 				36FBE58C1ADD42DC00A64201 /* LaunchScreen.xib */,
@@ -218,7 +218,7 @@
 			);
 			name = Soca;
 			productName = Soca;
-			productReference = 36FBE57E1ADD42DC00A64201 /* Soca.app */;
+			productReference = 36FBE57E1ADD42DC00A64201 /* Soca-dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		36FBE5921ADD42DC00A64201 /* SocaTests */ = {
@@ -541,7 +541,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Soca/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)-dev";
 			};
 			name = Debug;
 		};
@@ -573,7 +573,7 @@
 				INFOPLIST_FILE = SocaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Soca.app/Soca";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Soca-dev.app/Soca-dev";
 			};
 			name = Debug;
 		};

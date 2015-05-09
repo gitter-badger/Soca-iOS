@@ -1,1 +1,1 @@
-../../../../../SocaCrypto/Pod/Classes/SOCACryptor.h
+../../../SocaCrypto/Pod/Classes/SOCACryptor.h

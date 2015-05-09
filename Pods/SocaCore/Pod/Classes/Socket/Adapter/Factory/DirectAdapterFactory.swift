@@ -9,11 +9,11 @@
 import Foundation
 
 class DirectAdapterFactory : AdapterFactory {
-    func canHandle(request: ConnectMessage) -> Bool {
+    func canHandle(request: ConnectRequest) -> Bool {
         return true
     }
     
-    func getAdapter(request: ConnectMessage, delegateQueue: dispatch_queue_t) -> Adapter {
+    func getAdapter(request: ConnectRequest, delegateQueue: dispatch_queue_t) -> Adapter {
         return DirectAdapter(request: request, delegateQueue: delegateQueue)
     }
 }

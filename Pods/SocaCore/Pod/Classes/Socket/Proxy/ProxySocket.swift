@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
-//import CocoaLumberjackSwift
 
 class ProxySocket : SocketDelegate {
     enum ProxySocketReadTag: Int {
@@ -20,121 +18,142 @@ class ProxySocket : SocketDelegate {
     }
     
     var destinationHost: String!
-    var destinationPort: UInt16!
-    var connectRequest: ConnectMessage!
+    var destinationPort: Int!
+    var connectRequest: ConnectRequest!
     var tunnel: Tunnel?
     let socket: Socket
-    var forwarding = false
-    unowned let proxy: ProxyServer
     
-    var _removed = false
-    var _onceToken: dispatch_once_t = 0
+    /**
+    Return false when and only when socket and tunnel?.adapter.socket are both disconnected.
+    */
+    var connected: Bool {
+        if (socket.connected || tunnel?.adapter.connected ?? false) {
+            return true
+        }
+        return false
+    }
 
+    // Ideally, proxy should be unowned instead of weak.
+    // However, the proxy may be already released when the socket is retained by GCD blocks.
+    weak var proxy: ProxyServer!
     
-    init(socket: GCDAsyncSocket, proxy: ProxyServer) {
+    private var removeToken: dispatch_once_t = 0
+
+    init(socket: Socket, proxy: ProxyServer) {
         self.proxy = proxy
-        self.socket = Socket(socket: socket)
+        self.socket = socket
         self.socket.socketDelegate = self
     }
     
-    func openSocket() {} // called to open the socket to recieve data
-    func adapterBecameReady(withResponse: ConnectMessage?) {}
-    
-    func connect() {} // called to connect to remote server for data
-    
-    func connectDidFail() {
-        dispatch_once(&_onceToken) {
-            if !self._removed {
-                self.socket._socket.disconnect()
-                self.tunnel?.adapter.socket._socket.disconnect()
-                self.proxy.socketDidDisconnect(self)
-                self._removed = true
-            }
-        }
+    convenience init(socket: GCDAsyncSocket, proxy: ProxyServer) {
+        let socket = Socket(socket: socket)
+        self.init(socket: socket, proxy: proxy)
     }
     
-    func ready() {
-        self.forwarding = true
+    // MARK: method to implement in subclass for specific type of proxy.
+    
+    /**
+    Override this to begin receive data from local socket.
+    */
+    func openSocket() {}
+    
+    /**
+    Override this to define how to connect to remote server or proxy server.
+    All information is in self.connectRequest.
+    */
+    func connectToRemote() {}
+    
+    func recievedResponse(response: ConnectResponse? = nil) {}
+    
+    func didReadData(data: NSData, withTag tag: Int) {}
+    
+    func didWriteDataWithTag(tag: Int) {}
+
+    func didRecieveRequest() {}
+    
+    func didRecieveDataFromRemote(data: NSData) {
+        writeData(data, withTag: SocketTag.Forward)
+    }
+    
+    // MARK: control methods
+    func disconnect() {
+        socket.disconnect()
+        tunnel?.adapter.disconnect()
+    }
+    
+    func readyForForward() {
         self.tunnel?.proxySocketBecameReady()
     }
     
     func getDelegateQueue() -> dispatch_queue_t {
-        return socket._socket.delegateQueue
+        return socket.delegateQueue
     }
     
-    func didReadData(data: NSData, withTag tag: ProxySocketReadTag) {}
-    func didWriteData(data: NSData, withTag tag: ProxySocketWriteTag) {}
+    func connectionDidFail() {
+        disconnect()
+        if !connected {
+            dispatch_once(&removeToken) {
+                self.proxy?.socketDidDisconnect(self)
+            }
+        }
+    }
+    
+    /**
+    Call this when self.connectRequest is ready and adapter should start to connect to remote
+    */
+    func readyToConnectToRemote() {
+        connectToRemote()
+    }
     
     // MARK: helper methods
-    func writeData(data: NSData, withTimeout timeout: Double, withTag tag: ProxySocketWriteTag) {
-        self.socket.writeData(data, withTimeout: timeout, withTag: tag.rawValue)
+    func writeData(data: NSData, withTimeout timeout: Double, withTag tag: Int) {
+        socket.writeData(data, withTimeout: timeout, withTag: tag)
     }
     
-    func writeData(data: NSData, withTag tag: ProxySocketWriteTag) {
-        self.writeData(data, withTimeout: -1, withTag: tag)
+    func writeData(data: NSData, withTag tag: Int) {
+        writeData(data, withTimeout: -1, withTag: tag)
     }
     
-    func readDataToLength(length :Int, withTimeout timeout: Double, withTag tag: ProxySocketReadTag) {
-        self.socket.readDataToLength(length, withTimeout: timeout, withTag: tag.rawValue)
+    func readDataToLength(length :Int, withTimeout timeout: Double, withTag tag: Int) {
+        socket.readDataToLength(length, withTimeout: timeout, withTag: tag)
     }
     
-    func readDataToLength(length: Int, withTag tag: ProxySocketReadTag) {
-        self.readDataToLength(length, withTimeout: -1, withTag: tag)
+    func readDataToLength(length: Int, withTag tag: Int) {
+        readDataToLength(length, withTimeout: -1, withTag: tag)
     }
     
-    func readData(#tag: ProxySocketReadTag) {
-        self.socket.readData(tag: tag.rawValue)
+    func readData(#tag: Int) {
+        socket.readData(tag: tag)
     }
     
-    func readDataToData(data: NSData, withTimeout timeout: Double, withTag tag: ProxySocketReadTag) {
-        self.socket.readDataToData(data, withTimeout: timeout, withTag: tag.rawValue)
+    func readDataToData(data: NSData, withTimeout timeout: Double, withTag tag: Int) {
+        socket.readDataToData(data, withTimeout: timeout, withTag: tag)
     }
     
-    func readDataToData(data: NSData, withTag tag: ProxySocketReadTag){
-        self.readDataToData(data, withTimeout: -1, withTag: tag)
+    func readDataToData(data: NSData, withTag tag: Int){
+        readDataToData(data, withTimeout: -1, withTag: tag)
     }
     
-    // MARK: delegation methods
+    func sendToRemote(#data: NSData) {
+        tunnel!.sendToRemote(data)
+    }
+    
+    func readDataForForward() {
+        readData(tag: SocketTag.Forward)
+    }
+    
+    // MARK: delegation methods for SocketDelegate
     func socketDidDisconnect(socket: Socket, withError err: NSError?) {
-        self.connectDidFail()
+        connectionDidFail()
     }
     
-    func socketDidConnectToHost(host: String, onPort: UInt16) {}
+    func socketDidConnectToHost(host: String, onPort: Int) {}
     
     func socketDidReadData(data: NSData, withTag tag: Int) {
-        if forwarding {
-            // call delegate function on tunnel
-            if let _tag = Tunnel.TunnelReadTag(rawValue: tag) {
-                self.tunnel?.didReadData(data, withTag: _tag)
-            } else {
-                Setup.getLogger().error("ProxySocket read some data with unknown data tag \(tag), should be some one in Tunnel.TunnelReadTag, disconnect now")
-                self.connectDidFail()
-            }
-        } else {
-            if let _tag = ProxySocketReadTag(rawValue: tag) {
-                self.didReadData(data, withTag: _tag)
-            } else {
-                Setup.getLogger().error("ProxySocket recieved some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketReadTag, disconnect now")
-                self.connectDidFail()
-            }
-        }
+        didReadData(data, withTag: tag)
     }
     
-    func socketDidWriteData(data: NSData, withTag tag: Int) {
-        if forwarding {
-            if let _tag = Tunnel.TunnelWriteTag(rawValue: tag) {
-                self.tunnel?.didWriteData(data, withTag: _tag)
-            } else {
-                Setup.getLogger().error("ProxySocket write some data with unknown data tag \(tag), should be some one in Tunnel.TunnelWriteTag, disconnect now")
-                self.connectDidFail()
-            }
-        } else  {
-            if let _tag = ProxySocketWriteTag(rawValue: tag) {
-                self.didWriteData(data, withTag: _tag)
-            } else {
-                Setup.getLogger().error("ProxySocket sent some data with unknown data tag \(tag), should be some one in ProxySocket.ProxySocketWriteTag, disconnect now")
-                self.connectDidFail()
-            }
-        }
+    func socketDidWriteDataWithTag(tag: Int) {
+        didWriteDataWithTag(tag)
     }
 }

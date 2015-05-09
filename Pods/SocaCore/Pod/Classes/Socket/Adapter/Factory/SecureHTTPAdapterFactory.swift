@@ -9,7 +9,7 @@
 import Foundation
 
 class SecureHTTPAdapterFactory : HTTPAdapterFactory {
-    override func getAdapter(request: ConnectMessage, delegateQueue: dispatch_queue_t) -> Adapter {
+    override func getAdapter(request: ConnectRequest, delegateQueue: dispatch_queue_t) -> Adapter {
         return SecureHTTPAdapter(request: request, delegateQueue: delegateQueue, serverHost: serverHost, serverPort: serverPort, auth: self.auth)
     }
 }

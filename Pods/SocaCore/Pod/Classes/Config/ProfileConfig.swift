@@ -19,9 +19,8 @@ public class ProfileConfig: NSManagedObject {
         return proxies.allObjects as! [ProxyConfig]
     }
     
-    public func profile() -> Profile {
+    func profile() -> Profile {
         let profile = Profile(profileConfig: self)
-        profile.config = self
         return profile
     }
 }

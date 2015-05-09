@@ -15,7 +15,7 @@ class AdapterFactoryGroup : AdapterFactory {
         self.factories = factories
     }
     
-    func canHandle(request: ConnectMessage) -> Bool {
+    func canHandle(request: ConnectRequest) -> Bool {
         for factory in factories {
             if factory.canHandle(request) {
                 return true
@@ -24,7 +24,7 @@ class AdapterFactoryGroup : AdapterFactory {
         return false
     }
     
-    func getAdapter(request: ConnectMessage, delegateQueue: dispatch_queue_t) -> Adapter {
+    func getAdapter(request: ConnectRequest, delegateQueue: dispatch_queue_t) -> Adapter {
         for factory in factories {
             if factory.canHandle(request) {
                 return factory.getAdapter(request, delegateQueue: delegateQueue)
