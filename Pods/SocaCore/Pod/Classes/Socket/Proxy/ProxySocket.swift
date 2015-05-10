@@ -82,7 +82,7 @@ class ProxySocket : SocketDelegate {
     }
     
     func readyForForward() {
-        self.tunnel?.proxySocketBecameReady()
+        tunnel?.proxySocketBecameReady()
     }
     
     func getDelegateQueue() -> dispatch_queue_t {
@@ -90,11 +90,8 @@ class ProxySocket : SocketDelegate {
     }
     
     func connectionDidFail() {
-        disconnect()
-        if !connected {
-            dispatch_once(&removeToken) {
-                self.proxy?.socketDidDisconnect(self)
-            }
+        dispatch_once(&removeToken) {
+            self.proxy?.socketDidDisconnect(self)
         }
     }
     
