@@ -1,6 +1,6 @@
 {
   "name": "SocaCore",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "summary": "The core of Soca.",
   "description": "                       Things backing up Soca.\n",
   "homepage": "https://github.com/zhuhaow/SocaCore",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/zhuhaow/SocaCore.git",
-    "tag": "0.4.1"
+    "tag": "0.4.2"
   },
   "requires_arc": true,
   "source_files": "Pod/Classes/**/*.{h,m,swift}",

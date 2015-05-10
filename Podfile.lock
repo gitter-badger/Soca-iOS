@@ -2,7 +2,7 @@ PODS:
   - MagicalRecord (2.2):
     - MagicalRecord/Core (= 2.2)
   - MagicalRecord/Core (2.2)
-  - SocaCore (0.4.1):
+  - SocaCore (0.4.2):
     - MagicalRecord (~> 2.2.0)
     - SocaCrypto (~> 0.1.0)
     - XCGLogger (~> 2.0.0)
@@ -11,14 +11,14 @@ PODS:
   - XLForm (2.1.0)
 
 DEPENDENCIES:
-  - SocaCore (from `https://github.com/zhuhaow/SocaCore.git`, tag `0.4.1`)
+  - SocaCore (from `https://github.com/zhuhaow/SocaCore.git`, tag `v0.4.2`)
   - SocaCrypto (from `https://github.com/zhuhaow/SocaCrypto.git`, tag `0.1.0`)
   - XLForm (from `https://github.com/zhuhaow/XLForm.git`)
 
 EXTERNAL SOURCES:
   SocaCore:
     :git: https://github.com/zhuhaow/SocaCore.git
-    :tag: 0.4.1
+    :tag: v0.4.2
   SocaCrypto:
     :git: https://github.com/zhuhaow/SocaCrypto.git
     :tag: 0.1.0
@@ -28,7 +28,7 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   SocaCore:
     :git: https://github.com/zhuhaow/SocaCore.git
-    :tag: 0.4.1
+    :tag: v0.4.2
   SocaCrypto:
     :git: https://github.com/zhuhaow/SocaCrypto.git
     :tag: 0.1.0
@@ -38,7 +38,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
-  SocaCore: 8af87f8d1d9dd2cb0de6cd33802c6e5afab88e54
+  SocaCore: abffa746f28ae6dab9e443ebf60c2db2e30fc3ae
   SocaCrypto: 165508ef929fa5c2341e29827fbd33fc84941e2b
   XCGLogger: 90570901ddf86d5479672d61a1b0a639235b851a
   XLForm: ba9e657a360a810ab1f64cc2cd6307fd99a86866
