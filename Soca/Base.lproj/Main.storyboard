@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Lu3-YP-ASO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AMT-Wd-hli">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Soca-->
@@ -39,35 +39,11 @@
                             <outlet property="delegate" destination="Dr7-bk-WwW" id="hLz-oU-KxD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Soca" id="MiK-6e-NAr">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="ymT-EJ-RCw">
-                            <connections>
-                                <segue destination="Q9a-jL-G2u" kind="show" id="RRV-fa-uCS"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Soca" id="MiK-6e-NAr"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Pi-81-6n5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1500" y="1031"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="cL7-k3-tSy">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Lu3-YP-ASO" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lli-qB-rah">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Dr7-bk-WwW" kind="relationship" relationship="rootViewController" id="bgV-ry-RhC"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dAE-8r-Swd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="683" y="1031"/>
+            <point key="canvasLocation" x="3790" y="166"/>
         </scene>
         <!--Settings-->
         <scene sceneID="aGi-N4-nDA">
@@ -165,7 +141,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IpQ-3q-Ide" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2245" y="1031"/>
+            <point key="canvasLocation" x="3061" y="1031"/>
         </scene>
         <!--APN-->
         <scene sceneID="0EQ-kR-nRP">
@@ -242,7 +218,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IL0-SV-bW0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3900" y="1572"/>
+            <point key="canvasLocation" x="5524" y="1572"/>
         </scene>
         <!--Adapters-->
         <scene sceneID="f4n-T9-qON">
@@ -289,7 +265,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zbq-qM-3WR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2978" y="131"/>
+            <point key="canvasLocation" x="4602" y="131"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5Ql-lE-FYh">
@@ -309,5 +285,66 @@
             </objects>
             <point key="canvasLocation" x="2233" y="1776"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="c3H-XV-hDx">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9AC-vT-zVu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="jh2-MW-lUa"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jhk-c2-2WO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Q9a-jL-G2u" kind="relationship" relationship="rootViewController" id="zYr-kq-wYW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ssG-yY-mlc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2285" y="1025"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="xq2-Mh-oaH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="phg-jf-qvY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="5tB-A0-jxO"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2uV-9F-XBZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Dr7-bk-WwW" kind="relationship" relationship="rootViewController" id="Bnc-gb-DJQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a8A-NM-Wfg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2978" y="166"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Y0Z-cU-YlB">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="AMT-Wd-hli" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="izi-ff-CzH">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="phg-jf-qvY" kind="relationship" relationship="viewControllers" id="fru-pS-O0v"/>
+                        <segue destination="9AC-vT-zVu" kind="relationship" relationship="viewControllers" id="bcS-dn-pOe"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P9b-bc-NnA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1738" y="338"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="profile" width="25" height="25"/>
+        <image name="settings" width="25" height="25"/>
+    </resources>
 </document>
