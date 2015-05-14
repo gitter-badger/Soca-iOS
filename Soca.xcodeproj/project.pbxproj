@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0623D3F3B88C43C9251C7FD9 /* Pods_SocaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9337A4B83C00260B9151FFBA /* Pods_SocaTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		366C70AD1B0338C90002DDD1 /* Pods-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 366C70AC1B0338C90002DDD1 /* Pods-acknowledgements.plist */; };
 		36A68F9F1AE2890D00A3CAEE /* APNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A68F9E1AE2890D00A3CAEE /* APNViewController.swift */; };
 		36FBE5891ADD42DC00A64201 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36FBE5871ADD42DC00A64201 /* Main.storyboard */; };
 		36FBE58B1ADD42DC00A64201 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36FBE58A1ADD42DC00A64201 /* Images.xcassets */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		19854B0DE5A7E08C18CAA120 /* Pods-SocaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocaTests/Pods-SocaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		28F4E77A64C53A0B3A019C5F /* Pods-Soca.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soca.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soca/Pods-Soca.debug.xcconfig"; sourceTree = "<group>"; };
+		366C70AC1B0338C90002DDD1 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
 		36A68F9E1AE2890D00A3CAEE /* APNViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APNViewController.swift; sourceTree = "<group>"; };
 		36FBE57E1ADD42DC00A64201 /* Soca-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Soca-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36FBE5881ADD42DC00A64201 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		36FBE5AD1ADD476500A64201 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				366C70AC1B0338C90002DDD1 /* Pods-acknowledgements.plist */,
 				36FBE5AB1ADD476500A64201 /* blank.mp3 */,
 			);
 			path = "Supporting Files";
@@ -287,6 +290,7 @@
 				36FBE5891ADD42DC00A64201 /* Main.storyboard in Resources */,
 				36FBE58E1ADD42DC00A64201 /* LaunchScreen.xib in Resources */,
 				36FBE58B1ADD42DC00A64201 /* Images.xcassets in Resources */,
+				366C70AD1B0338C90002DDD1 /* Pods-acknowledgements.plist in Resources */,
 				36FBE5BF1ADD476500A64201 /* blank.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -51,6 +51,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'MagicalRecord.framework'
   install_framework 'SocaCore.framework'
   install_framework 'SocaCrypto.framework'
+  install_framework 'VTAcknowledgementsViewController.framework'
   install_framework 'XCGLogger.framework'
   install_framework 'XLForm.framework'
 fi
@@ -58,6 +59,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'MagicalRecord.framework'
   install_framework 'SocaCore.framework'
   install_framework 'SocaCrypto.framework'
+  install_framework 'VTAcknowledgementsViewController.framework'
   install_framework 'XCGLogger.framework'
   install_framework 'XLForm.framework'
 fi
