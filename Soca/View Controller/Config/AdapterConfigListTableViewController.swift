@@ -98,7 +98,7 @@ class AdapterConfigListTableViewController: UITableViewController, AdapterConfig
         cell.textLabel!.text = adapterConfig.name
         cell.detailTextLabel!.text = adapterConfig.type
         
-        if adapterConfig is DirectAdapterConfig {
+        if adapterConfig is DirectAdapterConfig || adapterConfig is BlackHoleAdapterConfig {
             cell.selectionStyle = .None
             cell.accessoryType = .None
         }
@@ -111,7 +111,8 @@ class AdapterConfigListTableViewController: UITableViewController, AdapterConfig
 
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if fetchedResultsController.objectAtIndexPath(indexPath) is DirectAdapterConfig {
+        let adapter: AnyObject = fetchedResultsController.objectAtIndexPath(indexPath)
+        if adapter is DirectAdapterConfig || adapter is BlackHoleAdapterConfig {
             return false
         }
         return true
