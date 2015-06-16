@@ -1,4 +1,6 @@
 # Soca-iOS
+
+[![Join the chat at https://gitter.im/zhuhaow/Soca-iOS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/zhuhaow/Soca-iOS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![status](https://img.shields.io/badge/status-maintained-brightgreen.svg) ![version](https://img.shields.io/github/release/zhuhaow/Soca-iOS.svg) ![license](https://img.shields.io/github/license/zhuhaow/Soca-iOS.svg)
 
 A rule based proxy forwarder on iPhone and iPad. 
